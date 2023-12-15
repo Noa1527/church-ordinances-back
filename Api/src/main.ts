@@ -10,7 +10,8 @@ async function bootstrap() {
 
   app.enableCors({
     // ne pas oublier d'enlever le _DEV pour la prod
-    origin: configService.get<string>('FRONTEND_URL_DEV'), // Remplacez 'http://example.com' par votre domaine
+    // origin: configService.get<string>('FRONTEND_URL'), // Remplacez 'http://example.com' par votre domaine
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
