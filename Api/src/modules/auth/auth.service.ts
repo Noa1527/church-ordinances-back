@@ -116,12 +116,9 @@ export class AuthService {
         isAdmin: user.isAdmin,
         roles: leaderRoles.roles  // Add the user roles to the payload
     };
-    console.log('payload',payload);
-    
     
     // const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
     // await this.userService.updateRefreshToken(user._id.toString(), refreshToken);
-
     return {
       access_token: await this.jwtService.signAsync(payload),
       expires_in: moment().add(7, 'days').unix(),
