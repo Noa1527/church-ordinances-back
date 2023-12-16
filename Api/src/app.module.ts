@@ -11,10 +11,6 @@ import { BlessingModule } from './modules/blessing/blessing.module';
 import { LeaderRoleModule } from './modules/leader_role/leader_role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TeamsModule } from './modules/teams/teams.module';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { MailService } from './modules/mail/mail.service';
-import { MailController } from './modules/mail/mail.controller';
-import { MailModule } from './modules/mail/mail.module';
 import { FamilyModule } from './modules/family/family.module';
 
 @Module({
@@ -31,17 +27,6 @@ import { FamilyModule } from './modules/family/family.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
-    MailerModule.forRoot({
-      transport: {
-        useFactory: async (configService: ConfigService) => ({
-          service: 'gmail',
-          auth: {
-            user: configService.get<string>('MAILER_USER'),
-            pass: configService.get<string>('MAILER_PASSWORD'),
-          },
-        }),
-      },
-    }),
     UserModule,
     CommentModule,
     MemberModule,
@@ -50,12 +35,10 @@ import { FamilyModule } from './modules/family/family.module';
     LeaderRoleModule,
     AuthModule,
     TeamsModule,
-    MailerModule,
-    MailModule,
     FamilyModule,
 
   ],
-  controllers: [AppController, MailController],
-  providers: [AppService, MailService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

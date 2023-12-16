@@ -13,7 +13,6 @@ export class UserService {
         return newUser.save();
     }
 
-    
     async profile(id: string): Promise<User> {
         return await this.userModel.findById(id).exec();
     }
