@@ -10,7 +10,7 @@ async function bootstrap() {
   // const frontendUrls = configService.get<string>('FRONTEND_URL').split(',');
   // console.log('front url',frontendUrls);
   app.enableCors({
-    origin: 'https://church-ordinances-front-noa1527.vercel.app',
+    origin: 'https://church-ordinances-front.vercel.app',
     methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
     allowedHeaders: [
       'Content-Type', 'Accept', 'Authorization'
