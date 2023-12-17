@@ -10,16 +10,16 @@ async function bootstrap() {
   // const frontendUrls = configService.get<string>('FRONTEND_URL').split(',');
   // console.log('front url',frontendUrls);
   app.enableCors({
-    // origin: 'https://church-ordinances-front.vercel.app',
-    origin: '*',
+    origin: configService.get<string>('FRONTEND_URL'),
     methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
     allowedHeaders: [
       'Content-Type', 'Accept', 'Authorization'
     ],
     credentials: true,
     optionsSuccessStatus: 200,
+    // origin: '*',
+    // origin: 'https://church-ordinances-front.vercel.app',
     // ne pas oublier d'enlever le _DEV pour la prod
-    // origin: configService.get<string>('FRONTEND_URL'),
   });
 
   app.useGlobalPipes(new ValidationPipe());
