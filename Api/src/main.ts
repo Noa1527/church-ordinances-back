@@ -14,9 +14,9 @@ async function bootstrap() {
     // origin: '*',
     // origin: configService.get<string>('FRONTEND_URL'),
     origin: 'https://church-ordinances-front-noa1527.vercel.app/',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
     allowedHeaders: [
-      'Content-Type, Accept, Authorization'
+      'Content-Type', 'Accept', 'Authorization'
     ],
     credentials: true,
     optionsSuccessStatus: 200,
