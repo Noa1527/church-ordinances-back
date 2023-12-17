@@ -10,9 +10,6 @@ async function bootstrap() {
   // const frontendUrls = configService.get<string>('FRONTEND_URL').split(',');
   // console.log('front url',frontendUrls);
   app.enableCors({
-    // ne pas oublier d'enlever le _DEV pour la prod
-    // origin: '*',
-    // origin: configService.get<string>('FRONTEND_URL'),
     origin: 'https://church-ordinances-front-noa1527.vercel.app',
     methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
     allowedHeaders: [
@@ -20,6 +17,9 @@ async function bootstrap() {
     ],
     credentials: true,
     optionsSuccessStatus: 200,
+    // ne pas oublier d'enlever le _DEV pour la prod
+    // origin: '*',
+    // origin: configService.get<string>('FRONTEND_URL'),
   });
 
   app.useGlobalPipes(new ValidationPipe());
