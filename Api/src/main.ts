@@ -12,11 +12,13 @@ async function bootstrap() {
   app.enableCors({
     // ne pas oublier d'enlever le _DEV pour la prod
     // origin: '*',
-    origin: configService.get<string>('FRONTEND_URL'),
+    // origin: configService.get<string>('FRONTEND_URL'),
+    allowedHeaders: [
+      'Content-Type, Accept, Access-Control-Allow-Origin, Authorization, Access-Control-Allow-Headers, Access-Control-Request-Method, Access-Control-Request-Headers'
+    ],
+    origin: 'https://church-ordinances-front-noa1527.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // allowedHeaders: [
-    //   'Content-Type, Accept , Authorization , X-Requested-With , X-Forwarded-for , X-Amzn-Trace-Id , Access-Control-Allow-Origin'
-    // ],
+    optionsSuccessStatus: 200,
     credentials: true,
   });
 
