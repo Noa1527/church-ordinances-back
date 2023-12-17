@@ -13,13 +13,13 @@ async function bootstrap() {
     // ne pas oublier d'enlever le _DEV pour la prod
     // origin: '*',
     // origin: configService.get<string>('FRONTEND_URL'),
-    allowedHeaders: [
-      'Content-Type, Accept, Access-Control-Allow-Origin, Authorization, Access-Control-Allow-Headers, Access-Control-Request-Method, Access-Control-Request-Headers'
-    ],
-    origin: 'https://church-ordinances-front-noa1527.vercel.app',
+    origin: 'https://church-ordinances-front-noa1527.vercel.app/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    optionsSuccessStatus: 200,
+    allowedHeaders: [
+      'Content-Type, Accept, Authorization'
+    ],
     credentials: true,
+    optionsSuccessStatus: 200,
   });
 
   app.useGlobalPipes(new ValidationPipe());
