@@ -13,7 +13,7 @@ async function bootstrap() {
     // ne pas oublier d'enlever le _DEV pour la prod
     // origin: '*',
     // origin: configService.get<string>('FRONTEND_URL'),
-    origin: 'https://church-ordinances-front-noa1527.vercel.app/',
+    origin: 'https://church-ordinances-front-noa1527.vercel.app',
     methods: ['GET','HEAD','PUT','PATCH','POST','DELETE','OPTIONS'],
     allowedHeaders: [
       'Content-Type', 'Accept', 'Authorization'
