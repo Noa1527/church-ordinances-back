@@ -4,5 +4,4 @@ export class CreateFamilyDto {
 
     @IsString()
     readonly name: string;
-
 }

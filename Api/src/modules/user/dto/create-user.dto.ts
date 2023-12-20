@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsString, IsEmail, MinLength, IsBoolean, MaxLength, IsMongoId, IsOptional, ValidateNested,} from 'class-validator';
+import { IsString, IsEmail, MinLength, IsBoolean, MaxLength, IsOptional, ValidateNested,} from 'class-validator';
 import { CreateLeaderRoleDto } from 'src/modules/leader_role/dto/create-leader-role.dto';
 
 export class CreateUserDto {
@@ -27,8 +27,6 @@ export class CreateUserDto {
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateLeaderRoleDto)
-    leaderRoles?: CreateLeaderRoleDto; // Use CreateOrdinanceDto
-
-
+    leaderRoles?: CreateLeaderRoleDto;
 }
 

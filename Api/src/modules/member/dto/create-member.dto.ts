@@ -17,7 +17,7 @@ export class CreateMemberDto {
     @IsEmail()
     readonly email: string;
 
-    @IsString() // <- Change this
+    @IsString() 
     readonly birthDate: string;
 
     @IsPhoneNumber('FR')
@@ -29,21 +29,20 @@ export class CreateMemberDto {
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateOrdinanceDto)
-    ordinance?: CreateOrdinanceDto; // Use CreateOrdinanceDto
-
+    ordinance?: CreateOrdinanceDto; 
+    
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateBlessingDto)
-    blessing?: CreateBlessingDto; // Use CreateBlessingDto
+    blessing?: CreateBlessingDto;
 
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateLeaderRoleDto)
-    leaderRoles?: CreateLeaderRoleDto; // Use CreateLeaderRoleDto
+    leaderRoles?: CreateLeaderRoleDto;
     
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateFamilyDto)
-    _family?: CreateFamilyDto; // Use CreateLeaderRoleDto
-
+    _family?: CreateFamilyDto;
 }

@@ -29,9 +29,6 @@ export class User {
     @Prop({default: false, required: false})
     isActive: Boolean;
 
-    // @Prop()
-    // refreshToken: string;
-
     @Prop({default: Date.now})
     createdAt: Date;
 
@@ -43,7 +40,6 @@ export class User {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'LeaderRoles' })
     leaderRoles: mongoose.Types.ObjectId;
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

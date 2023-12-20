@@ -24,5 +24,4 @@ export class UpdateUserDto {
 
     @IsBoolean()
     readonly isActive: boolean;
-
 }

@@ -17,13 +17,10 @@ export class OrdinanceController {
         return this.ordinanceService.create(createOrdonanceDto);
     }
 
-
     // update ordinance
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Put(':id')
     async update(@Param('id') id: string, @Body() updateOrdinanceDto: UpdateOrdinanceDto) {
         return this.ordinanceService.update(id, updateOrdinanceDto);
     }
-
-
 }

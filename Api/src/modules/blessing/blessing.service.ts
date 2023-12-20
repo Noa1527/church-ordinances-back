@@ -15,6 +15,4 @@ export class BlessingService {
     async update(id: string, blessing: Partial<Blessing>): Promise<BlessingDocument> {
         return this._blessingModel.findByIdAndUpdate(id, { ...blessing }, { new: true });
     }
-
-    
 }

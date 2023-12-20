@@ -9,16 +9,8 @@ export class TeamsService {
 
   async create(team: Partial<Team>): Promise<Team> {
     const createdTeam = new this.teamModel(team);
-    console.log(createdTeam);
-    
     return createdTeam.save();
   }
-
-  // team = _id : 0097654433 _familly = _id : 0097654433
-  // familly = _id : 0097654433
-  // async createFamily(team: Partial<Team>): Promise<Team> {
-
-  // }
 
   async findAll(): Promise<Team[]> {
     return this.teamModel.find().exec();
@@ -28,11 +20,7 @@ export class TeamsService {
     return this.teamModel.findById(id).exec();
   }
 
-
   async update(seq: string, team: Partial<Team>): Promise<Team> {
-    console.log('team', team);
-    console.log('seq', seq);
     return this.teamModel.findOneAndUpdate({ seq: seq }, team, { new: true }).exec();
   }
-
 }

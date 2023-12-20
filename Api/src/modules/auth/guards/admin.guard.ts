@@ -12,6 +12,6 @@ export class AdminGuard implements CanActivate {
         throw new ConflictException('vous nest pas adminitrateur')
     }
     
-    return request.user.isAdmin;  // Assurez-vous que l'utilisateur possède une propriété 'isAdmin'
+    return request.user.isAdmin;
   }
 }

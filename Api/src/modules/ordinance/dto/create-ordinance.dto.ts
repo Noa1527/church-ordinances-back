@@ -1,4 +1,4 @@
-import { IsBoolean, IsMongoId } from 'class-validator';
+import { IsBoolean } from 'class-validator';
 
 export class CreateOrdinanceDto {
 
@@ -16,5 +16,4 @@ export class CreateOrdinanceDto {
     
     @IsBoolean()
     Sealing: boolean;
-    
 }

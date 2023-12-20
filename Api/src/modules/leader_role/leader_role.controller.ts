@@ -9,7 +9,6 @@ export class LeaderRoleController {
 
     constructor(private readonly  leaderRoleService: LeaderRoleService) {}
 
-    // create ordinance
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Post()
     @HttpCode(HttpStatus.CREATED)

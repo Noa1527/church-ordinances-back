@@ -7,7 +7,6 @@ export enum Gender {
     Female = 'F',
 } 
 
-
 export class RegisterDto {
     @IsString()
     readonly firstName: string;
@@ -34,6 +33,6 @@ export class RegisterDto {
     @IsOptional()
     @ValidateNested()
     @Type(() => CreateLeaderRoleDto)
-    leaderRoles?: CreateLeaderRoleDto; //
+    leaderRoles?: CreateLeaderRoleDto; 
 
 }

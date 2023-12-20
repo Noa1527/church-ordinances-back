@@ -29,10 +29,6 @@ export class TeamsController {
   @UseGuards(JwtAuthGuard, AdminGuard)
   @Patch(':seq')
   update(@Param('seq') seq: string, @Body() team: Partial<Team>): Promise<Team> {
-    console.log('team', team);
-    console.log('seq', seq);
-    
-    
     return this.teamsService.update(seq, team);
   }
 }
