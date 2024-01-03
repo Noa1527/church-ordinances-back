@@ -5,6 +5,7 @@ import { CreateOrdinanceDto } from 'src/modules/ordinance/dto/create-ordinance.d
 import { CreateBlessingDto } from 'src/modules/blessing/dto/create-blessing.dto';
 import { CreateLeaderRoleDto } from 'src/modules/leader_role/dto/create-leader-role.dto';
 import { CreateFamilyDto } from 'src/modules/family/dto/create-family.dto';
+import { Regions } from 'src/modules/user/dto/create-user.dto';
 
 export class CreateMemberDto {
 
@@ -25,6 +26,9 @@ export class CreateMemberDto {
 
     @IsEnum(Gender)
     gender: Gender;
+    
+    @IsEnum(Regions)
+    regions: Regions;
 
     @IsOptional()
     @ValidateNested()

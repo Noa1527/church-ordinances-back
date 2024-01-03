@@ -1,9 +1,10 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { Member } from './member.schema';
+import { Regions } from '../user/dto/create-user.dto';
 
 @Controller('member')
 export class MemberController {
@@ -18,20 +19,20 @@ export class MemberController {
 
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Get()
-    async findAll() {
-        return this.memberService.findAll();
+    async findAll(@Query('region') region: Regions) {
+        return this.memberService.findAll(region);
     }
 
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Get('leaders')
-    findLeaders(): Promise<Member[]> {
-       return this.memberService.findLeaders();
+    findLeaders(@Query('region') region: Regions): Promise<Member[]> {
+       return this.memberService.findLeaders(region);
     }
 
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Get('womenLeaders')
-    findWomenLeaders(): Promise<Member[]> {
-        return this.memberService.findWomenLeaders();
+    findWomenLeaders(@Query('region') region: Regions): Promise<Member[]> {
+        return this.memberService.findWomenLeaders(region);
     }
 
     @UseGuards(JwtAuthGuard, AdminGuard)

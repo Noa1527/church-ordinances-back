@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsString, IsEmail, MinLength, IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { CreateLeaderRoleDto } from 'src/modules/leader_role/dto/create-leader-role.dto';
+import { Regions } from 'src/modules/user/dto/create-user.dto';
 
 export enum Gender {
     Male = 'H',
@@ -29,6 +30,9 @@ export class RegisterDto {
 
     @IsString()
     readonly gender: Gender;
+
+    @IsString()
+    readonly regions: Regions;
 
     @IsOptional()
     @ValidateNested()

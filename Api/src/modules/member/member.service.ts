@@ -8,6 +8,7 @@ import { BlessingService } from '../blessing/blessing.service';
 import { LeaderRoleService } from '../leader_role/leader_role.service';
 import { Roles } from '../leader_role/leader_role.schema';
 import { FamilyService } from '../family/family.service';
+import { Regions } from '../user/dto/create-user.dto';
 
 @Injectable()
 export class MemberService {
@@ -37,57 +38,10 @@ export class MemberService {
     
         return newMember.save();
     }
-    // async create(member: CreateMemberDto): Promise<Member> {
-    //     const newMember = new this.memberModel(member);
-    //     newMember.birthDate = this.convertBirthDate(member.birthDate);
-
-    //     if (member.ordinance) {
-    //         const newOrdinance = await this.ordinanceService.create( member.ordinance);
-    //         newMember.ordinance = newOrdinance._id;
-    //     }
-    //     if (member.blessing) {
-    //         const newBlessing = await this.blessingService.create(member.blessing);
-    //         newMember.blessing = newBlessing._id;
-    //     }
-
-    //     if (member.leaderRoles) {
-    //         const newLeaderRoles = await this.leaderRoleService.create(member.leaderRoles);
-    //         newMember.leaderRoles = newLeaderRoles._id;
-    //     }
-
-    //     if (member._family) {
-    //         const newFamily = await this._familyService.create(member._family);
-    //         newMember._family = newFamily._id;
-    //     }
-
-    //     return newMember.save();
-    // }
-
-    // async update(id: string, member: CreateMemberDto): Promise<Member> {
-    //     const updatedMember = await this.memberModel.findById(id);
-    //     updatedMember.birthDate = this.convertBirthDate(member.birthDate);
-      
-    //     if (member.ordinance) {
-    //       const updatedOrdinance = await this.ordinanceService.update(updatedMember.ordinance.toString(), member.ordinance);
-    //       updatedMember.ordinance = updatedOrdinance._id;
-    //     }
-        
-    //     if (member.blessing) {
-    //       const updatedBlessing = await this.blessingService.update(updatedMember.blessing.toString(), member.blessing);
-    //       updatedMember.blessing = updatedBlessing._id;
-    //     }
-    //     if (member.leaderRoles) {
-    //       const updatedLeaderRoles = await this.leaderRoleService.update(updatedMember.leaderRoles.toString(), member.leaderRoles);
-    //       updatedMember.leaderRoles = updatedLeaderRoles._id;
-    //     }
-    //     if (member._family) {
-    //       const updatedFamily = await this._familyService.update(updatedMember._family.toString(), member._family);
-    //       updatedMember._family = new Types.ObjectId(updatedFamily._id);
-    //     }
-      
-    //     return updatedMember.save();
-    //   }
+    
     async update(id: string, member: CreateMemberDto): Promise<Member> {
+        console.log('------> ici <-------',member);
+        
         const updatedMember = await this.memberModel.findById(id);
         updatedMember.birthDate = this.convertBirthDate(member.birthDate);
     
@@ -106,9 +60,15 @@ export class MemberService {
             const updatedFamily = await this._familyService.update(updatedMember._family.toString(), member._family);
             updatedMember._family = new Types.ObjectId(updatedFamily._id);
         }
-    
+
+        if (member.regions) {
+            updatedMember.regions = member.regions;
+        }
+        console.log('------> ici <-------',updatedMember);
+        
         return updatedMember.save();
     }
+
 
     private convertBirthDate(birthDate: string): Date {
         const [day, month, year] = birthDate.split("/"); // birthDate is string here
@@ -119,8 +79,8 @@ export class MemberService {
         return new Date(`${year}-${month}-${day}`);
     }
 
-    async findAll() {
-        return await this.memberModel.find()
+    async findAll(region: Regions) {
+        return await this.memberModel.find({regions: region})
         .populate(['ordinance', 'blessing', 'leaderRoles', '_family'])
         .sort({ firstName: 1 })
         .exec();
@@ -144,8 +104,8 @@ export class MemberService {
         return await this.memberModel.findOne({ email }).exec();
     }
     
-    async findLeaders(): Promise<Member[]> {
-        let leaders = await this.memberModel.find()
+    async findLeaders(region: Regions): Promise<Member[]> {
+        let leaders = await this.memberModel.find({ regions: region })
             .populate({
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
@@ -156,8 +116,8 @@ export class MemberService {
         return leaders.filter(member => member.leaderRoles !== null);
     }
     
-    async findWomenLeaders(): Promise<Member[]> {
-        let leaders = await this.memberModel.find()
+    async findWomenLeaders(region: Regions): Promise<Member[]> {
+        let leaders = await this.memberModel.find({ regions: region })
             .populate({
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.ReliefSociety, Roles.Primary, Roles.YoungWomen] } }

@@ -12,6 +12,7 @@ export class UserService {
         const newUser = new this.userModel(user);
         return newUser.save();
     }
+    
 
     async profile(id: string): Promise<User> {
         return await this.userModel.findById(id).exec();
@@ -85,13 +86,9 @@ export class UserService {
     
         return getUser;
     }
-    
 
     async delete(id: string) {
         return await this.userModel.findByIdAndRemove(id);
     }
 
-    async updateRefreshToken(userId: string, refreshToken: string): Promise<User> {
-        return this.userModel.findByIdAndUpdate(userId, { refreshToken }, { new: true });
-      }
 }

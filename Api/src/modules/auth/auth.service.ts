@@ -41,6 +41,7 @@ export class AuthService {
         isActive: registerDto.isActive,
         createdAt: new Date(),
         gender: registerDto.gender,
+        regions: registerDto.regions,
         leaderRoles: null,
     };
 
@@ -80,7 +81,8 @@ export class AuthService {
         email: user.email, 
         sub: user._id, 
         isAdmin: user.isAdmin,
-        roles: leaderRoles.roles 
+        roles: leaderRoles.roles,
+        regions: user.regions,
     };
     
     return {

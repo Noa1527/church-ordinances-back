@@ -1,3 +1,5 @@
+import { Regions } from "../dto/create-user.dto";
+
 export enum Gender {
     Male = 'H',
     Female = 'F',
@@ -13,6 +15,7 @@ export interface User {
     isActive: boolean;
     refreshToken: string;
     createdAt: Date;
+    regions: Regions;
     gender: Gender;
 }
   

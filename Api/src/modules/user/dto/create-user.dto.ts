@@ -1,7 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsString, IsEmail, MinLength, IsBoolean, MaxLength, IsOptional, ValidateNested,} from 'class-validator';
+import { IsString, IsEmail, MinLength, IsBoolean, MaxLength, IsOptional, ValidateNested, isEnum, IsEnum,} from 'class-validator';
 import { CreateLeaderRoleDto } from 'src/modules/leader_role/dto/create-leader-role.dto';
 
+export enum Regions {
+    Toul = 'Toul',
+    Cholet = 'Cholet',
+}
 export class CreateUserDto {
 
     @IsString()
@@ -23,6 +27,9 @@ export class CreateUserDto {
 
     @IsBoolean()
     readonly isActive: boolean;
+
+    @IsEnum(Regions)
+    readonly regions: Regions;
 
     @IsOptional()
     @ValidateNested()

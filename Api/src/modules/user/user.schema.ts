@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Regions } from './dto/create-user.dto';
 
 export enum Gender {
   Male = 'H',
@@ -34,6 +35,9 @@ export class User {
 
     @Prop({type: String, enum: Object.values(Gender)})
     gender: Gender;
+
+    @Prop({type: String, enum: Object.values(Regions)})
+    regions: Regions;
 
     @Prop([{ type: String, ref: 'Comment' }])
     comments: string[];
