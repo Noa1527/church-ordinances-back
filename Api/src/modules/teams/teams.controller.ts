@@ -1,14 +1,15 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { Team } from 'src/modules/teams/teams.schema';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Regions } from '../user/dto/create-user.dto';
 
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
 
-  @UseGuards(JwtAuthGuard, AdminGuard)
+  // @UseGuards(JwtAuthGuard, AdminGuard)
   @Post()
   create(@Body() team: Partial<Team>): Promise<Team> {
     return this.teamsService.create(team);
@@ -16,8 +17,9 @@ export class TeamsController {
 
   @UseGuards(JwtAuthGuard, AdminGuard)
   @Get()
-  findAll(): Promise<Team[]> {
-    return this.teamsService.findAll();
+  @HttpCode(HttpStatus.OK)
+  findAll(@Query('region') region: Regions): Promise<Team[]> {
+    return this.teamsService.findAll(region);
   }
 
   @UseGuards(JwtAuthGuard, AdminGuard)

@@ -1,8 +1,9 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query, UseGuards } from '@nestjs/common';
 import { FamilyService } from './family.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateFamilyDto } from './dto/create-family.dto';
 import { AdminGuard } from '../auth/guards/admin.guard';
+import { Regions } from '../user/dto/create-user.dto';
 
 @Controller('family')
 export class FamilyController {
@@ -19,7 +20,7 @@ export class FamilyController {
     @UseGuards(JwtAuthGuard)
     @Get()
     @HttpCode(HttpStatus.OK)
-    async findAll() {
-        return this._familyService.findAll();
+    async findAll(@Query('region') region: Regions) {
+        return this._familyService.findAll(region);
     }
 }

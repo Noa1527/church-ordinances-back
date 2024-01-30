@@ -12,8 +12,8 @@ export class TeamsService {
     return createdTeam.save();
   }
 
-  async findAll(): Promise<Team[]> {
-    return this.teamModel.find().exec();
+  async findAll(userRegion: string): Promise<Team[]> {
+    return this.teamModel.find({region: userRegion}).exec();
   }
 
   async findOne(id: string): Promise<Team> {

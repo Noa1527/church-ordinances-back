@@ -16,8 +16,8 @@ export class FamilyService {
         return newFamily.save();
     }
 
-    async findAll(): Promise<FamilyDocument[]> {
-        return this._familyModel.find().sort({ name: 1 }).exec();
+    async findAll(userRegion: string): Promise<FamilyDocument[]> {
+        return this._familyModel.find({ region: userRegion }).sort({ name: 1 }).exec();
     }
 
     async update(id: string, family: Partial<Family>): Promise<FamilyDocument> {

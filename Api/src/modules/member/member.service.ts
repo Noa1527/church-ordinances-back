@@ -110,7 +110,7 @@ export class MemberService {
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
             })
-            .populate('ordinance blessing')
+            .populate('ordinance blessing _family')
             .sort({ firstName: 1 })
             .exec(); 
         return leaders.filter(member => member.leaderRoles !== null);
@@ -122,7 +122,7 @@ export class MemberService {
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.ReliefSociety, Roles.Primary, Roles.YoungWomen] } }
             })
-            .populate('ordinance blessing')
+            .populate('ordinance blessing _family')
             .sort({ firstName: 1 })
             .exec(); 
         return leaders.filter(member => member.leaderRoles !== null);
