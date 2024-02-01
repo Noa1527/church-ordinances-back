@@ -15,5 +15,8 @@ export class Family {
     @Prop({type: String, enum: Object.values(Regions)})
     region: Regions;
 
+    @Prop({type: String, required: true, default: 'families'})
+    code: string;
+
 }
 export const FamilySchema = SchemaFactory.createForClass(Family);

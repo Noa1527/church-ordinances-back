@@ -8,4 +8,7 @@ export class CreateFamilyDto {
 
     @IsEnum(Regions)
     readonly region: Regions;
+
+    @IsString()
+    readonly code: string;
 }
