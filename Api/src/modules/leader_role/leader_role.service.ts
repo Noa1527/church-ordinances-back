@@ -12,6 +12,10 @@ export class LeaderRoleService {
         return newLeaderRoles.save();
     }
 
+    async findAll(): Promise<LeaderRolesDocument[]> {
+        return this._leaderRoleModel.find().exec();
+    }
+
     async update(id: string, leaderRole: Partial<LeaderRoles>): Promise<LeaderRolesDocument> {
         return this._leaderRoleModel.findByIdAndUpdate(id, { ...leaderRole }, { new: true });
     }

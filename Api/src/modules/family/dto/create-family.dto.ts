@@ -10,5 +10,5 @@ export class CreateFamilyDto {
     readonly region: Regions;
 
     @IsString()
-    readonly code: string;
+    readonly code?: string;
 }

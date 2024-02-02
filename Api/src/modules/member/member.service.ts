@@ -16,7 +16,7 @@ export class MemberService {
         @InjectModel(Member.name) private memberModel: Model<MemberDocument>, 
         private readonly ordinanceService: OrdinanceService,
         private readonly blessingService: BlessingService,
-        private readonly leaderRoleService: LeaderRoleService,
+        private readonly _leaderRoleservice: LeaderRoleService,
         private readonly _familyService: FamilyService
     ) {}
 
@@ -24,7 +24,7 @@ export class MemberService {
         const newMember = new this.memberModel(member);
         newMember.birthDate = this.convertBirthDate(member.birthDate);
     
-        const createAndAssignId = async (service: OrdinanceService | BlessingService | LeaderRoleService | FamilyService, property: string) => {
+        const createAndAssignId = async (service: OrdinanceService | BlessingService | FamilyService, property: string) => {
             if (member[property]) {
                 const newItem = await service.create(member[property]);
                 newMember[property] = newItem._id;
@@ -33,9 +33,9 @@ export class MemberService {
     
         await createAndAssignId(this.ordinanceService, 'ordinance');
         await createAndAssignId(this.blessingService, 'blessing');
-        await createAndAssignId(this.leaderRoleService, 'leaderRoles');
+        // await createAndAssignId(this._leaderRoleservice, 'leaderRoles');
         await createAndAssignId(this._familyService, '_family');
-    
+        
         return newMember.save();
     }
     
@@ -45,7 +45,7 @@ export class MemberService {
         const updatedMember = await this.memberModel.findById(id);
         updatedMember.birthDate = this.convertBirthDate(member.birthDate);
     
-        const updateAndAssignId = async (service: OrdinanceService | BlessingService | LeaderRoleService, property: string) => {
+        const updateAndAssignId = async (service: OrdinanceService | BlessingService, property: string) => {
             if (member[property]) {
                 const updatedItem = await service.update(updatedMember[property].toString(), member[property]);
                 updatedMember[property] = updatedItem._id;
@@ -54,7 +54,7 @@ export class MemberService {
     
         await updateAndAssignId(this.ordinanceService, 'ordinance');
         await updateAndAssignId(this.blessingService, 'blessing');
-        await updateAndAssignId(this.leaderRoleService, 'leaderRoles');
+        // await updateAndAssignId(this._leaderRoleservice, 'leaderRoles');
     
         if (member._family) {
             const updatedFamily = await this._familyService.update(updatedMember._family.toString(), member._family);
@@ -63,6 +63,10 @@ export class MemberService {
 
         if (member.regions) {
             updatedMember.regions = member.regions;
+        }
+
+        if (member.leaderRoles) {
+            updatedMember.leaderRoles = member.leaderRoles;
         }
         console.log('------> ici <-------',updatedMember);
         

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Regions } from '../user/dto/create-user.dto';
+import { LeaderRoles } from '../leader_role/leader_role.schema';
 
 export enum Gender {
   Male = 'H',
@@ -36,8 +37,8 @@ export class Member {
     @Prop([{ type: String, ref: 'Comment' }])
     comments: string[];
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'LeaderRoles' })
-    leaderRoles: mongoose.Types.ObjectId;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: LeaderRoles.name })
+    leaderRoles: LeaderRoles;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Ordinance' })
     ordinance: mongoose.Types.ObjectId;

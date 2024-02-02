@@ -15,7 +15,7 @@ export class Family {
     @Prop({type: String, enum: Object.values(Regions)})
     region: Regions;
 
-    @Prop({type: String, required: true, default: 'families'})
+    @Prop({type: String, required: false, default: 'families'})
     code: string;
 
 }
