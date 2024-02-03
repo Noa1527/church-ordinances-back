@@ -40,6 +40,9 @@ export class Member {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: LeaderRoles.name })
     leaderRoles: LeaderRoles;
 
+    @Prop({ type: Date })
+    aaronicPriesthoodReception: Date;
+
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Ordinance' })
     ordinance: mongoose.Types.ObjectId;
 

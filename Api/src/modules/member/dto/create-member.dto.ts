@@ -1,13 +1,10 @@
-import { IsString, IsEmail, IsPhoneNumber, IsEnum, IsOptional, ValidateNested, IsMongoId } from 'class-validator';
+import { IsString, IsEmail, IsPhoneNumber, IsEnum, IsOptional, ValidateNested, IsMongoId, IsDateString, ValidateIf } from 'class-validator';
 import { Gender } from '../member.schema';
 import { Type } from 'class-transformer';
 import { CreateOrdinanceDto } from 'src/modules/ordinance/dto/create-ordinance.dto';
 import { CreateBlessingDto } from 'src/modules/blessing/dto/create-blessing.dto';
-import { CreateLeaderRoleDto } from 'src/modules/leader_role/dto/create-leader-role.dto';
 import { CreateFamilyDto } from 'src/modules/family/dto/create-family.dto';
 import { Regions } from 'src/modules/user/dto/create-user.dto';
-import { LeaderRoleController } from 'src/modules/leader_role/leader_role.controller';
-import { ObjectId } from 'mongoose';
 import { LeaderRoles } from 'src/modules/leader_role/leader_role.schema';
 
 export class CreateMemberDto {
@@ -43,12 +40,12 @@ export class CreateMemberDto {
     @Type(() => CreateBlessingDto)
     blessing?: CreateBlessingDto;
 
-    // @IsOptional()
-    // @ValidateNested()
-    // @Type(() => CreateLeaderRoleDto)
-    // leaderRoles?: CreateLeaderRoleDto;
     @IsMongoId()
     leaderRoles?: LeaderRoles;
+
+    @IsDateString()
+    @ValidateIf((o) => o.ordinance?.aaronicPriesthood === true)
+    aaronicPriesthoodReception: Date;
     
     @IsOptional()
     @ValidateNested()
