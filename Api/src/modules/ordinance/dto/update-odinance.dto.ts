@@ -4,6 +4,9 @@ export class UpdateOrdinanceDto {
 
     @IsBoolean()
     Baptism: boolean;
+
+    @IsBoolean()
+    AaronicPriesthood: boolean;
     
     @IsBoolean()
     PriestHood: boolean;

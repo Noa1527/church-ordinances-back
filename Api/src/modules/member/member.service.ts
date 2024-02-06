@@ -33,19 +33,20 @@ export class MemberService {
     
         await createAndAssignId(this.ordinanceService, 'ordinance');
         await createAndAssignId(this.blessingService, 'blessing');
-        // await createAndAssignId(this._leaderRoleservice, 'leaderRoles');
         await createAndAssignId(this._familyService, '_family');
         
         return newMember.save();
     }
     
     async update(id: string, member: CreateMemberDto): Promise<Member> {
-        console.log('------> ici <-------',member);
         
         const updatedMember = await this.memberModel.findById(id);
         updatedMember.birthDate = this.convertBirthDate(member.birthDate);
+        updatedMember.aaronicPriesthoodReception = this.convertBirthDate(member.aaronicPriesthoodReception);
+
     
         const updateAndAssignId = async (service: OrdinanceService | BlessingService, property: string) => {
+            
             if (member[property]) {
                 const updatedItem = await service.update(updatedMember[property].toString(), member[property]);
                 updatedMember[property] = updatedItem._id;
@@ -54,7 +55,6 @@ export class MemberService {
     
         await updateAndAssignId(this.ordinanceService, 'ordinance');
         await updateAndAssignId(this.blessingService, 'blessing');
-        // await updateAndAssignId(this._leaderRoleservice, 'leaderRoles');
     
         if (member._family) {
             const updatedFamily = await this._familyService.update(updatedMember._family.toString(), member._family);
@@ -68,8 +68,7 @@ export class MemberService {
         if (member.leaderRoles) {
             updatedMember.leaderRoles = member.leaderRoles;
         }
-        console.log('------> ici <-------',updatedMember);
-        
+
         return updatedMember.save();
     }
 

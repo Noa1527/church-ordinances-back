@@ -10,6 +10,7 @@ import { Ordinance, OrdinanceSchema } from './ordinance.schema';
 
   ],
   providers: [OrdinanceService],
-  controllers: [OrdinanceController]
+  controllers: [OrdinanceController],
+  exports: [OrdinanceService],
 })
 export class OrdinanceModule {}

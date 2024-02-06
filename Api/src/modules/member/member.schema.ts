@@ -22,7 +22,7 @@ export class Member {
     @Prop({required: true})
     email: string;
     
-    @Prop()
+    @Prop({ type: Date })
     birthDate: Date;
 
     @Prop()
