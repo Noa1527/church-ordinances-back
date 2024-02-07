@@ -8,6 +8,9 @@ export class Ordinance {
 
     @Prop({default: false})
     Baptism: boolean;
+    
+    @Prop({default: false})
+    AaronicPriesthood: boolean;
 
     @Prop({default: false})
     PriestHood: boolean;

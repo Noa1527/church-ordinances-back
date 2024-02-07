@@ -43,9 +43,8 @@ export class CreateMemberDto {
     @IsMongoId()
     leaderRoles?: LeaderRoles;
 
-    @IsDateString()
-    @ValidateIf((o) => o.ordinance?.aaronicPriesthood === true)
-    aaronicPriesthoodReception: Date;
+    @ValidateIf((o) => o.ordinance?.AaronicPriesthood === true)
+    aaronicPriesthoodReception: string;
     
     @IsOptional()
     @ValidateNested()
