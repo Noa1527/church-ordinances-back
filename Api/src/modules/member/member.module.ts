@@ -11,6 +11,8 @@ import { LeaderRoles, LeaderRolesSchema } from '../leader_role/leader_role.schem
 import { LeaderRoleService } from '../leader_role/leader_role.service';
 import { FamilyService } from '../family/family.service';
 import { Family, FamilySchema } from '../family/family.schema';
+import { ResendService } from '../resendMail/resendMail.service';
+import { MailjetService } from '../mailjet/mailjet.service';
 
 @Module({
   imports: [
@@ -23,7 +25,15 @@ import { Family, FamilySchema } from '../family/family.schema';
 
     ]),
   ],
-  providers: [MemberService, OrdinanceService, BlessingService, LeaderRoleService, FamilyService],
+  providers: [
+    MemberService, 
+    OrdinanceService, 
+    BlessingService, 
+    LeaderRoleService, 
+    FamilyService, 
+    ResendService,
+    MailjetService,
+  ],
   controllers: [MemberController]
 })
 export class MemberModule {}

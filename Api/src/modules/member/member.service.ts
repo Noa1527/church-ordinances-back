@@ -9,6 +9,8 @@ import { LeaderRoleService } from '../leader_role/leader_role.service';
 import { Roles } from '../leader_role/leader_role.schema';
 import { FamilyService } from '../family/family.service';
 import { Regions } from '../user/dto/create-user.dto';
+import { ResendService } from '../resendMail/resendMail.service';
+import { MailjetService } from '../mailjet/mailjet.service';
 
 @Injectable()
 export class MemberService {
@@ -17,7 +19,9 @@ export class MemberService {
         private readonly ordinanceService: OrdinanceService,
         private readonly blessingService: BlessingService,
         private readonly _leaderRoleservice: LeaderRoleService,
-        private readonly _familyService: FamilyService
+        private readonly _familyService: FamilyService,
+        private readonly _resendService: ResendService,
+        private readonly _mailjetService: MailjetService,
     ) {}
 
     async create(member: CreateMemberDto): Promise<Member> {
@@ -129,5 +133,35 @@ export class MemberService {
             .sort({ firstName: 1 })
             .exec(); 
         return leaders.filter(member => member.leaderRoles !== null);
+    }
+
+    async sendAnEmail(mail: any) {
+        let leaders = await this.memberModel.find({
+            _id: mail.memberId
+        })
+            .populate({
+                path: 'leaderRoles',
+                match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
+            })
+            .populate('ordinance blessing _family')
+            .sort({ firstName: 1 })
+            .exec(); 
+        
+        return await this._mailjetService.sendMinisteringAppointmentMail(leaders[0], mail);
+    }
+
+    async sendAnEmailLesson(mail: any) {
+        let leaders = await this.memberModel.find({
+            _id: mail.memberId
+        })
+            .populate({
+                path: 'leaderRoles',
+                match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
+            })
+            .populate('ordinance blessing _family')
+            .sort({ firstName: 1 })
+            .exec(); 
+        
+        return await this._mailjetService.sendPriesthoodLessonMail(leaders[0], mail);
     }
 }

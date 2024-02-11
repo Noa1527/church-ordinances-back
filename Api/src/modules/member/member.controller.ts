@@ -26,8 +26,6 @@ export class MemberController {
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Get('leaders')
     findLeaders(@Query('region') region: Regions): Promise<Member[]> {
-        console.log('region',region);
-        
        return this.memberService.findLeaders(region);
     }
 
@@ -46,7 +44,20 @@ export class MemberController {
     @UseGuards(JwtAuthGuard, AdminGuard)
     @Put('/:id')
     async updateOne(@Param('id') id: string, @Body() createMemberDto: CreateMemberDto) {
-        console.log('------> ici <-------',createMemberDto);
         return this.memberService.update(id, createMemberDto);
+    }
+
+    @UseGuards(JwtAuthGuard, AdminGuard)
+    @Get('resendMail')
+    @HttpCode(HttpStatus.OK)
+    async resendMail(@Body() mail: any) {
+        return this.memberService.sendAnEmail(mail);
+    }
+
+    @UseGuards(JwtAuthGuard, AdminGuard)
+    @Get('resendMailLesson')
+    @HttpCode(HttpStatus.OK)
+    async resendMailLesson(@Body() mail: any) {
+        return this.memberService.sendAnEmailLesson(mail);
     }
 }

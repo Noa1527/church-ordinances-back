@@ -12,6 +12,8 @@ import { LeaderRoleModule } from './modules/leader_role/leader_role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TeamsModule } from './modules/teams/teams.module';
 import { FamilyModule } from './modules/family/family.module';
+import { ResendMailModule } from './modules/resendMail/resendMail.module';
+import { MailjetModule } from './modules/mailjet/mailjet.module';
 
 @Module({
   imports: [
@@ -36,7 +38,8 @@ import { FamilyModule } from './modules/family/family.module';
     AuthModule,
     TeamsModule,
     FamilyModule,
-
+    ResendMailModule,
+    MailjetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
