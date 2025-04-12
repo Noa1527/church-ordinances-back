@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsPhoneNumber, IsEnum, IsOptional, ValidateNested, IsMongoId, IsDateString, ValidateIf } from 'class-validator';
+import { IsString, IsEmail, IsPhoneNumber, IsEnum, IsOptional, ValidateNested, IsMongoId, IsDateString, ValidateIf, IsBoolean } from 'class-validator';
 import { Gender } from '../member.schema';
 import { Type } from 'class-transformer';
 import { CreateOrdinanceDto } from 'src/modules/ordinance/dto/create-ordinance.dto';
@@ -50,4 +50,6 @@ export class CreateMemberDto {
     @ValidateNested()
     @Type(() => CreateFamilyDto)
     _family?: CreateFamilyDto;
+
+    
 }

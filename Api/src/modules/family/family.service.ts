@@ -23,4 +23,9 @@ export class FamilyService {
     async update(id: string, family: Partial<Family>): Promise<FamilyDocument> {
         return this._familyModel.findByIdAndUpdate(id, { ...family }, { new: true });
     }
+
+    async delete(id: string) {  
+        return await this._familyModel
+        .findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+    }
 }

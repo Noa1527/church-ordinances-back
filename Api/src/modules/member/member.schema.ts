@@ -51,6 +51,9 @@ export class Member {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Family' })
     _family: mongoose.Types.ObjectId;
+
+    @Prop({ type: Boolean, default: false })
+    isDeleted: boolean;
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);

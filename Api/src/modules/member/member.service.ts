@@ -87,7 +87,7 @@ export class MemberService {
     }
 
     async findAll(region: Regions) {
-        return await this.memberModel.find({regions: region})
+        return await this.memberModel.find({regions: region, isDeleted: false})
         .populate(['ordinance', 'blessing', 'leaderRoles', '_family'])
         .sort({ firstName: 1 })
         .exec();
@@ -100,19 +100,19 @@ export class MemberService {
     }
 
     async findOneByFirstName(firstName: string) {
-        return await this.memberModel.findOne({ firstName }).exec();
+        return await this.memberModel.findOne({ firstName, isDeleted: false}).exec();
     }
 
     async findOneByLastName(lastName: string) {
-        return await this.memberModel.findOne({ lastName }).exec();
+        return await this.memberModel.findOne({ lastName, isDeleted: false }).exec();
     }
 
     async findOneByEmail(email: string) {
-        return await this.memberModel.findOne({ email }).exec();
+        return await this.memberModel.findOne({ email, isDeleted: false }).exec();
     }
     
     async findLeaders(region: Regions): Promise<Member[]> {
-        let leaders = await this.memberModel.find({ regions: region })
+        let leaders = await this.memberModel.find({ regions: region, isDeleted: false })
             .populate({
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
@@ -124,7 +124,7 @@ export class MemberService {
     }
     
     async findWomenLeaders(region: Regions): Promise<Member[]> {
-        let leaders = await this.memberModel.find({ regions: region })
+        let leaders = await this.memberModel.find({ regions: region, isDeleted: false })
             .populate({
                 path: 'leaderRoles',
                 match: { roles: { $in: [Roles.ReliefSociety, Roles.Primary, Roles.YoungWomen] } }
@@ -163,5 +163,9 @@ export class MemberService {
             .exec(); 
         
         return await this._mailjetService.sendPriesthoodLessonMail(leaders[0], mail);
+    }
+    
+    async delete(id: string) {  
+        return await this.memberModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
     }
 }

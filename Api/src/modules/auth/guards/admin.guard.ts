@@ -7,7 +7,7 @@ export class AdminGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log(request.user);
+    // console.log(request.user);
     if (!request.user.isAdmin) {
         throw new ConflictException('vous nest pas adminitrateur')
     }

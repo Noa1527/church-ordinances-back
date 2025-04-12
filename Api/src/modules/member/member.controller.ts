@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -60,4 +60,10 @@ export class MemberController {
     async resendMailLesson(@Body() mail: any) {
         return this.memberService.sendAnEmailLesson(mail);
     }
+    @Delete('/:id')
+    async delete(@Param('id') id: string) {
+        return this.memberService.delete(id);
+    }
+
+
 }
