@@ -18,5 +18,8 @@ export class Family {
     @Prop({type: String, required: false, default: 'families'})
     code: string;
 
+    @Prop({type: Boolean, default: false})
+    isDeleted: boolean
+
 }
 export const FamilySchema = SchemaFactory.createForClass(Family);

@@ -12,12 +12,11 @@ export class FamilyService {
     ) {}
 
     async create(family: Partial<Family>): Promise<FamilyDocument> {
-        const newFamily = new this._familyModel(family);
-        return newFamily.save();
+       return this._familyModel.create(family);
     }
 
     async findAll(userRegion: string): Promise<FamilyDocument[]> {
-        return this._familyModel.find({ region: userRegion }).sort({ name: 1 }).exec();
+        return this._familyModel.find({ region: userRegion, isDeleted: false }).sort({ name: 1 }).exec();
     }
 
     async update(id: string, family: Partial<Family>): Promise<FamilyDocument> {
