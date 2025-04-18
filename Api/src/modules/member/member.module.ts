@@ -13,9 +13,12 @@ import { FamilyService } from '../family/family.service';
 import { Family, FamilySchema } from '../family/family.schema';
 import { ResendService } from '../resendMail/resendMail.service';
 import { MailjetService } from '../mailjet/mailjet.service';
+import { BrevoService } from '../brevo/brevo.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule,
     MongooseModule.forFeature([
       { name: Member.name, schema: MemberSchema },
       { name: Ordinance.name, schema: OrdinanceSchema },
@@ -33,6 +36,7 @@ import { MailjetService } from '../mailjet/mailjet.service';
     FamilyService, 
     ResendService,
     MailjetService,
+    BrevoService
   ],
   controllers: [MemberController]
 })

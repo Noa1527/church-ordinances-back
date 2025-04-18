@@ -11,6 +11,8 @@ import { FamilyService } from '../family/family.service';
 import { Regions } from '../user/dto/create-user.dto';
 import { ResendService } from '../resendMail/resendMail.service';
 import { MailjetService } from '../mailjet/mailjet.service';
+import { UpdateMemberDto } from './dto/update-member.dto';
+import { BrevoService } from '../brevo/brevo.service';
 
 @Injectable()
 export class MemberService {
@@ -22,6 +24,7 @@ export class MemberService {
         private readonly _familyService: FamilyService,
         private readonly _resendService: ResendService,
         private readonly _mailjetService: MailjetService,
+        private readonly _brevoService: BrevoService,
     ) {}
 
     async create(member: CreateMemberDto): Promise<Member> {
@@ -42,12 +45,14 @@ export class MemberService {
         return newMember.save();
     }
     
-    async update(id: string, member: CreateMemberDto): Promise<Member> {
+    async update(id: string, member: UpdateMemberDto): Promise<Member> {
+        console.log('member', member);
         
         const updatedMember = await this.memberModel.findById(id);
         updatedMember.birthDate = this.convertBirthDate(member.birthDate);
         updatedMember.aaronicPriesthoodReception = this.convertBirthDate(member.aaronicPriesthoodReception);
-
+        updatedMember.firstName = member.firstName;
+        updatedMember.lastName = member.lastName;
     
         const updateAndAssignId = async (service: OrdinanceService | BlessingService, property: string) => {
             
@@ -137,7 +142,7 @@ export class MemberService {
 
     async sendAnEmail(mail: any) {
         let leaders = await this.memberModel.find({
-            _id: mail.memberId
+            _id: mail.member._id
         })
             .populate({
                 path: 'leaderRoles',
@@ -147,7 +152,11 @@ export class MemberService {
             .sort({ firstName: 1 })
             .exec(); 
         
-        return await this._mailjetService.sendMinisteringAppointmentMail(leaders[0], mail);
+        // return await this._mailjetService.sendMinisteringAppointmentMail(leaders[0], mail);
+        console.log('leaders', leaders);
+        console.log('mail', mail);
+        
+        return await this._brevoService.sendMinisteringAppointmentMail(leaders[0], mail);
     }
 
     async sendAnEmailLesson(mail: any) {

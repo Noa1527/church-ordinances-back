@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { Member } from './member.schema';
 import { Regions } from '../user/dto/create-user.dto';
+import { UpdateMemberDto } from './dto/update-member.dto';
 
 @Controller('member')
 export class MemberController {
@@ -42,15 +43,18 @@ export class MemberController {
     }
 
     @UseGuards(JwtAuthGuard, AdminGuard)
-    @Put('/:id')
-    async updateOne(@Param('id') id: string, @Body() createMemberDto: CreateMemberDto) {
-        return this.memberService.update(id, createMemberDto);
+    @Patch('/:id')
+    async updateOne(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto): Promise<Member> {
+
+        return this.memberService.update(id, updateMemberDto);
     }
 
     @UseGuards(JwtAuthGuard, AdminGuard)
-    @Get('resendMail')
+    @Post('resendMail')
     @HttpCode(HttpStatus.OK)
     async resendMail(@Body() mail: any) {
+        console.log('mail', mail);
+        
         return this.memberService.sendAnEmail(mail);
     }
 
