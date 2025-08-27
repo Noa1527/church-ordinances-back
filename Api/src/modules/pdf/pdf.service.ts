@@ -11,42 +11,55 @@ export class PdfService {
 
         const date = new Date(data.dateOfTheDay);
         const dateNextReu = new Date(data.formattedNextDate);
+        console.log('data.formattedNextDate', data.formattedNextDate);
+        
         const formattedDate = date.toLocaleDateString('fr-FR', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
         }).replace(/ /g, '_');
 
         const formatted_date = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
         })
 
-        const formattedNextDate = dateNextReu.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
+        const formattedNextDateValue = dateNextReu.toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
         })
+
+        console.log(`start : ${data.start}`);
+        console.log(`end : ${data.end}`);
+
 
         const startParts = data.start.replace('AM', '').replace('PM', '').trim().split(':');
         const endParts = data.end.replace('AM', '').replace('PM', '').trim().split(':');
 
+        console.log(`startParts : ${startParts}`);
+        console.log(`endParts : ${endParts}`);
+
+
         let startHour = parseInt(startParts[0]);
         if (data.start.includes('PM') && startHour !== 12) {
-        startHour += 12;
+            startHour += 12;
         } else if (data.start.includes('AM') && startHour === 12) {
-        startHour = 0;
+            startHour = 0;
         }
 
         let endHour = parseInt(endParts[0]);
         if (data.end.includes('PM') && endHour !== 12) {
-        endHour += 12;
+            endHour += 12;
         } else if (data.end.includes('AM') && endHour === 12) {
-        endHour = 0;
+            endHour = 0;
         }
+
+        console.log(`startHour : ${startHour}`);
+        console.log(`endHour : ${endHour}`);
 
         const formattedStart = `${startHour.toString().padStart(2, '0')}H${startParts[1]}`;
         const formattedEnd = `${endHour.toString().padStart(2, '0')}H${endParts[1]}`;
@@ -80,13 +93,15 @@ export class PdfService {
         doc.rect(margin, margin, boxWidthLeft, boxHeight).stroke();  // Dessine la bordure
         doc.fontSize(16).fillColor(headerColor).text('Branche de', margin + 10, margin + 10);
         doc.fontSize(16).text('TOUL', margin + 25, margin + 30);
-
+        console.log(`Début : ${formattedStart}`);
+        console.log(`Fin : ${formattedEnd}`);
         // Deuxième case : "Réunion de Collège des Anciens"
         doc.rect(margin + boxWidthLeft, margin, boxWidthRight, boxHeight).stroke();  // Dessine la bordure
         doc.fontSize(16).fillColor('black').text('RÉUNION DE COLLÈGE DES ANCIENS', margin + boxWidthLeft + 10, margin + 10, { align: 'center' });
         doc.fontSize(12).text(`${formatted_date}`, margin + boxWidthLeft + 10, margin + 35, { align: 'center' });
         doc.text(`De ${formattedStart} à ${formattedEnd}`, margin + boxWidthLeft + 10, margin + 50, { align: 'center' });
-
+console.log(`Début : ${formattedStart}`);
+        console.log(`Fin : ${formattedEnd}`);
         // 2 eme ligne : presidée et dirigée
         doc.rect(margin, margin + boxHeight, boxWidthLeft, boxHeight - 40).stroke();
         doc.fontSize(12).text(`Présidée par:`, margin + 5, margin + boxWidthLeft - 20);
@@ -119,7 +134,7 @@ export class PdfService {
         doc.fontSize(17).fillColor(headerColor).text("Sujets à l'ordre du jour", margin + boxPadding + 30, margin + 290, { underline: true, align: 'center' });
 
         const agendaHeight = data.agenda.length * 60; // hauteur totale des items de l'agenda
-        const ordreDuJourY = margin + 250 + agendaHeight + 0; // position verticale de "Ordre du jour"
+        const ordreDuJourY = margin + 420 + agendaHeight + 0; // position verticale de "Ordre du jour"
 
         // 6eme ligne : ordre du jour
         doc.rect(margin, margin + 310, pageWidth - 2 * margin, 410).stroke();
@@ -144,7 +159,7 @@ export class PdfService {
         doc.fontSize(11).fillColor('black').text("Prochaine réunion:", margin + 200 + 5 , 730 + 25 );
 
         doc.rect(margin * 4 + boxHeight * 3 - 1.5, footerStart, boxWidthLeft * 2.385, 20).stroke();
-        doc.fontSize(12).fillColor('black').text(`${formattedNextDate ? formattedNextDate : "Non renseigné"}`, margin + 300 + 5, 730 + 25 );
+        doc.fontSize(12).fillColor('black').text(`${formattedNextDateValue ? formattedNextDateValue : "Non renseigné"}`, margin + 300 + 5, 730 + 25 );
 
         doc.end();
     }
