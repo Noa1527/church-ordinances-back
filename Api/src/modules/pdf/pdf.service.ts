@@ -142,7 +142,7 @@ console.log(`Début : ${formattedStart}`);
         doc.fontSize(10).fillColor('black').text(`${index + 1}. ${item.point}`, margin + boxPadding, margin + 330 + index * 25);
         });
 
-        doc.fontSize(14).fillColor(headerColor).text("Compte Rendu", margin + boxPadding, ordreDuJourY, { underline: true, align: 'start' });
+        doc.fontSize(14).fillColor(headerColor).text("Compte Rendu", margin + boxPadding, ordreDuJourY - 150, { underline: true, align: 'start' });
         data.conteRendu.forEach((item, index) => {
         doc.fontSize(10).fillColor('black').text(`${index + 1}. ${item.point}`,  margin + boxPadding, margin + 500 + index * 40);
         });
