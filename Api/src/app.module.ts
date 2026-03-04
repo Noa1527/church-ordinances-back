@@ -15,6 +15,7 @@ import { FamilyModule } from './modules/family/family.module';
 import { ResendMailModule } from './modules/resendMail/resendMail.module';
 import { MailjetModule } from './modules/mailjet/mailjet.module';
 // import { BrevoModule } from './modules/brevo/brevo.module';
+import { PdfModule } from './modules/pdf/pdf.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { MailjetModule } from './modules/mailjet/mailjet.module';
     FamilyModule,
     ResendMailModule,
     MailjetModule,
+    PdfModule,
     // BrevoModule,
   ],
   controllers: [AppController],
