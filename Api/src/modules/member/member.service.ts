@@ -120,7 +120,7 @@ export class MemberService {
         let leaders = await this.memberModel.find({ regions: region, isDeleted: false })
             .populate({
                 path: 'leaderRoles',
-                match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum] } }
+                match: { roles: { $in: [Roles.BranchPresident, Roles.EldersQuorum, Roles.YoungMen] } }
             })
             .populate('ordinance blessing _family')
             .sort({ firstName: 1 })
